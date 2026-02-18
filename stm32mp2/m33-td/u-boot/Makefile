@@ -15,7 +15,13 @@ dtb-$(CONFIG_STM32MP25X) += \
 	stm32mp257f-ev1-cm33tdcid-ostl-emmc.dtb \
 	stm32mp257f-ev1-cm33tdcid-ostl-snor.dtb \
 	stm32mp257f-ev1-cm33tdcid-ostl-sdcard.dtb \
-	stm32mp257f-ev1-cm33tdcid-ostl-serial-ca35tdcid.dtb
+	stm32mp257f-ev1-cm33tdcid-ostl-serial-ca35tdcid.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-4Gb-m33td-emmc.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-4Gb-m33td-sdcard.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-4Gb-m33td-serial-a35td.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-m33td-emmc.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-m33td-sdcard.dtb \
+	stm32mp257f-phyflex-fpsc-g-som-m33td-serial-a35td.dtb
 
 #include $(srctree)/scripts/Makefile.dts
 

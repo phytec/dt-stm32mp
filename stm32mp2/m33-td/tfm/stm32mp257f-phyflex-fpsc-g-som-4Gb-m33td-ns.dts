@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) 2026 PHYTEC Messtechnik GmbH
+ * Authors: Christophe Parant <c.parant@phytec.fr>
+ *          Nicolas Raimundo <n.raimundo@phytec.fr>
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/clock/stm32mp25-clksrc.h>
+#include <dt-bindings/reset/st,stm32mp25-rcc.h>
+
+#include "stm32mp257.dtsi"
+#include "stm32mp25x-ns.dtsi"
+#include "stm32mp257f-phyflex-fpsc-g-som-m33td-resmem.dtsi"
+#include "stm32mp257f-phyflex-fpsc-g-som-m33td-ns-rcc.dtsi"
+#include "stm32mp25-pinctrl.dtsi"
+#include "stm32mp25xxai-pinctrl.dtsi"
+
+
+/ {
+	model = "PHYTEC phyFLEX-STM32MP257F FPSC-Gamma CM33TDCID Non Secure";
+	compatible = "phytec,stm32mp257f-phyflex-fpsc-g-som", "st,stm32mp257";
+
+	aliases {
+		serial0 = &uart5;
+	};
+
+	chosen {
+		stdout-device = &uart5;
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x80000000>;
+	};
+};
+
+&uart5 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart5_pins_a>;
+	clocks = <&rcc CK_KER_UART5>;
+	current-speed = <115200>;
+	status = "okay";
+};
+
+&systick {
+	clocks = <&rcc CK_ICN_HS_MCU>;
+	clock-frequency = <1000000>; /* tick at 1us */
+	status = "okay";
+};
