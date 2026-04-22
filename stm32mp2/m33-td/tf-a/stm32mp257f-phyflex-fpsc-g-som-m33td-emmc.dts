@@ -12,6 +12,9 @@
 #include "stm32mp25xf.dtsi"
 #include "stm32mp257f-phyflex-fpsc-g-som-m33td-rcc.dtsi"
 #include "stm32mp25-lpddr4-1x16Gbits-1x32bits-1200MHz.dtsi"
+#include "stm32mp25-lpddr4-alternate-1200MHz.dtsi"
+#include "stm32mp25-ddr.dtsi"
+#include "stm32mp25-ddr-alternate.dtsi"
 #include "stm32mp25-pinctrl.dtsi"
 #include "stm32mp25xxai-pinctrl.dtsi"
 

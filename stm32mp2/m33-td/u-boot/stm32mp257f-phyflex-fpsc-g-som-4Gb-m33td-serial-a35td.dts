@@ -5,7 +5,7 @@
  *         Nicolas Raimundo <n.raimundo@phytec.fr>.
  */
 
-#include "stm32mp257f-phyflex-fpsc-g-som-4Gb.dts"
+#include "stm32mp257f-phyflex-fpsc-g-som.dts"
 
 &dwc3 {
 	role-switch-default-mode = "peripheral";

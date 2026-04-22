@@ -5,7 +5,7 @@
  *          Nicolas Raimundo <n.raimundo@phytec.fr>
  */
 
-#include "stm32mp25xx-phyflex-fpsc-g-som-pinctrl.dtsi"
+#include "stm32mp2-phyflex-fpsc-g-som-pinctrl.dtsi"
 #include "stm32mp25xxak-pinctrl.dtsi"
 #include "stm32mp25xx-phyflex-fpsc-g-som-m33td-resmem.dtsi"
 #include <dt-bindings/net/ti-dp83867.h>

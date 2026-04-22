@@ -14,7 +14,7 @@
 #include "stm32mp25-lpddr4-1x32Gbits-1x32bits-1200MHz.dtsi"
 #include "stm32mp25-pinctrl.dtsi"
 #include "stm32mp25xxai-pinctrl.dtsi"
-#include "stm32mp25xx-phyflex-fpsc-g-som-pinctrl.dtsi"
+#include "stm32mp2-phyflex-fpsc-g-som-pinctrl.dtsi"
 
 / {
 	model = "PHYTEC phyFLEX-STM32MP257F FPSC-Gamma 4GiB RAM SDCARD CM33TDCID";
