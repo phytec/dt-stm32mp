@@ -165,6 +165,21 @@
 			no-map;
 		};
 
+		gpu_reserved_1gb: gpu-reserved-1gb@ba800000 {
+			reg = <0x0 0xba800000 0x0 0x4000000>;
+			no-map;
+		};
+
+		ltdc_sec_layer_1gb: ltdc-sec-layer-1gb@be800000 {
+			reg = <0x0 0xbe800000 0x0 0x800000>;
+			no-map;
+		};
+
+		ltdc_sec_rotation_1gb: ltdc-sec-rotation-1gb@bf000000 {
+			reg = <0x0 0xbf000000 0x0 0x1000000>;
+			no-map;
+		};
+
 		/* global autoconfigured region for contiguous allocations */
 		linux,cma {
 			compatible = "shared-dma-pool";
