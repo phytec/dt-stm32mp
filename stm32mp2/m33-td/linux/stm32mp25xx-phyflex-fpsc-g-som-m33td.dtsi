@@ -162,19 +162,19 @@
 	i2c8_eeprom: eeprom@50 {
 		compatible = "microchip,24c32", "atmel,24c32";
 		reg = <0x50>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	i2c8_rtc: rtc@52 {
 		compatible = "microcrystal,rv3028";
 		reg = <0x52>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	i2c8_tmp102: tmp102@48 {
 		compatible = "ti,tmp102";
 		reg = <0x48>;
-		status = "disabled";
+		status = "okay";
 	};
 };
 

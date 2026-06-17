@@ -522,18 +522,6 @@
 	};
 };
 
-&i2c8_eeprom {
-	status = "disabled";
-};
-
-&i2c8_rtc {
-	status = "disabled";
-};
-
-&i2c8_tmp102 {
-	status = "disabled";
-};
-
 &spi3 {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&spi3_pins_a>;
