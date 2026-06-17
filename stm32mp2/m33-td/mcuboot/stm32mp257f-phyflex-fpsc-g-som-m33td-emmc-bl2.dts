@@ -20,8 +20,11 @@
 #include "stm32mp257f-phyflex-fpsc-g-som-emmc-bl2-rcc.dtsi"
 #include "stm32mp257f-phyflex-fpsc-g-som-emmc-bl2-rif.dtsi"
 #include "stm32mp25-lpddr4-1x16Gbits-1x32bits-1200MHz.dtsi"
+#include "stm32mp25-lpddr4-alternate-1200MHz.dtsi"
+#include "stm32mp2-ddr-alternate.dtsi"
 #include "stm32mp25-pinctrl.dtsi"
 #include "stm32mp25xxai-pinctrl.dtsi"
+#include "stm32mp25xx-phyflex-fpsc-g-som-pinctrl.dtsi"
 
 / {
 	model = "PHYTEC phyFLEX-STM32MP257F FPSC-Gamma eMMC CM33TDCID";
@@ -66,6 +69,22 @@
 				   "iak";
 	};
 
+};
+
+&i2c8 {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&i2c8_pins_a>;
+	pinctrl-1 = <&i2c8_sleep_pins_a>;
+	clock-frequency = <400000>;
+	/delete-property/dmas;
+	/delete-property/dma-names;
+	status = "okay";
+
+	i2c8_eeprom: eeprom@50 {
+		compatible = "microchip,24c32", "atmel,24c32";
+		reg = <0x50>;
+		status = "okay";
+	};
 };
 
 &uart5 {
