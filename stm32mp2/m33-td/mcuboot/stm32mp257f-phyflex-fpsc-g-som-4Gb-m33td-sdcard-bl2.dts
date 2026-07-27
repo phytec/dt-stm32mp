@@ -269,6 +269,10 @@
 	shadow-provisionning = <0x0003EDB6>;
 };
 
+&ramcfg {
+	status = "okay";
+};
+
 &rifsc {
 	status = "okay";
 };

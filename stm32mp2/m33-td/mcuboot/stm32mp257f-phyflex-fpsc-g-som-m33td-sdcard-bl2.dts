@@ -21,6 +21,7 @@
 #include "stm32mp257f-phyflex-fpsc-g-som-sdcard-bl2-rif.dtsi"
 #include "stm32mp25-lpddr4-1x16Gbits-1x32bits-1200MHz.dtsi"
 #include "stm32mp25-lpddr4-alternate-1200MHz.dtsi"
+#include "stm32mp2-ddr.dtsi"
 #include "stm32mp2-ddr-alternate.dtsi"
 #include "stm32mp25-pinctrl.dtsi"
 #include "stm32mp25xxai-pinctrl.dtsi"
@@ -37,6 +38,7 @@
 	chosen {
 		stdout-device = &uart5;
 		tfm,entropy = &rng;
+		tfm,watchdog = &iwdg3;
 	};
 
 	memory@80000000 {
@@ -51,10 +53,10 @@
 			      <&id_otp>,
 			      <&package_otp>,
 			      <&hconf1_otp>,
-			      <&bl2_rotpk_0>,
-			      <&bl2_rotpk_0>, /*keep the same key for slot1 */
+			      <&tfm_fw_pkh>,
+			      <&ddr_fw_pkh>,
+			      <&ca35_fw_pkh>,
 			      <&board_id>,
-			      <&entropy_seed>,
 			      <&iak>;
 		nvmem-cell-names = "implementation_id",
 				   "rpn_otp",
@@ -62,10 +64,10 @@
 				   "id_otp",
 				   "package_otp",
 				   "hconf1_otp",
-				   "bl2_rotpk_0",
-				   "bl2_rotpk_1",
+				   "tfm_fw_pkh",
+				   "ddr_fw_pkh",
+				   "ca35_fw_pkh",
 				   "board_id",
-				   "entropy_seed",
 				   "iak";
 	};
 
@@ -116,6 +118,8 @@
 	pmic2: stpmic2@33 {
 		compatible = "st,stpmic2";
 		reg = <0x33>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
 		status = "okay";
 
 		regulators {
@@ -137,7 +141,6 @@
 				regulator-name = "vddgpu_pmic";
 				regulator-min-microvolt = <800000>;
 				regulator-max-microvolt = <900000>;
-				regulator-always-on;
 			};
 			vddio_pmic: buck4 {
 				regulator-name = "vddio_pmic";
@@ -231,60 +234,83 @@
 &pwr {
 	status = "okay";
 
-	vdd33ucpd: vdd33ucpd {
-		status = "okay";
-		regulator-min-microvolt = <3300000>;
-		regulator-max-microvolt = <3300000>;
-		vin-supply = <&vdd3v3_usb>;
-		regulator-always-on;
-	};
+	pwr_rif: access-controller {
+ 		status = "okay";
+ 	};
+ 
+	regulators {
+		vdd33ucpd: vdd33ucpd {
+			status = "okay";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			vin-supply = <&vdd3v3_usb>;
+			regulator-always-on;
+		};
 
-	vdda18adc: vdda18adc {
-		status = "okay";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		vin-supply = <&v1v8>;
-		regulator-always-on;
-	};
+		vdda18adc: vdda18adc {
+			status = "okay";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			vin-supply = <&v1v8>;
+			regulator-always-on;
+		};
 
-	vddgpu: vddgpu {
-		status = "okay";
-		vin-supply = <&vddgpu_pmic>;
-	};
+		vddgpu: vddgpu {
+			status = "okay";
+			vin-supply = <&vddgpu_pmic>;
+		};
 
-	vddio1: vddio1 {
-		status = "okay";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <3300000>;
-		vin-supply = <&vddio_sdcard>;
-	};
+		vddio1: vddio1 {
+			status = "okay";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <3300000>;
+			vin-supply = <&vddio_sdcard>;
+		};
 
-	vddio2: vddio2 {
-		status = "okay";
-		vin-supply = <&v1v8>;
-		regulator-always-on;
-	};
+		vddio2: vddio2 {
+			status = "okay";
+			vin-supply = <&v1v8>;
+			regulator-always-on;
+		};
 
-	vddio3: vddio3 {
-		status = "okay";
-		vin-supply = <&vddio_pmic>;
-		regulator-always-on;
-	};
+		vddio3: vddio3 {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+			regulator-always-on;
+		};
 
-	vddio4: vddio4 {
-		status = "okay";
-		vin-supply = <&vddio_pmic>;
-		regulator-always-on;
-	};
+		vddio4: vddio4 {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+			regulator-always-on;
+		};
 
-	vddio: vddio {
-		status = "okay";
-		vin-supply = <&vddio_pmic>;
+		vddio: vddio {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+		};
+	};
+};
+
+&nvram {
+	status = "okay";
+ 
+	nvmem-layout {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cm_fwu_info: tamp-bkp@124 {
+			#nvmem-cell-cells = <0>;
+			reg = <0x124 0x4>;
+		};
 	};
 };
 
 &hconf1_otp {
 	shadow-provisionning = <0x0003EDB6>;
+};
+
+&ramcfg {
+	status = "okay";
 };
 
 &rifsc {
@@ -312,4 +338,9 @@
 
 &tamp {
 	status = "okay";
+};
+
+&iwdg3 {
+	status = "okay";
+	timeout-sec = <120>;
 };

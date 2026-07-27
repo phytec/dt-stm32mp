@@ -60,5 +60,4 @@
 	mbox-names = "tx";
 	shmem = <&scmi_cid1_ns>;
 	/delete-property/ linaro,optee-channel-id;
-	/delete-node/protocol@13;
 };

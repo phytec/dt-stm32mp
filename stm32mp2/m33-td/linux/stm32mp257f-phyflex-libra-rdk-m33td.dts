@@ -33,8 +33,9 @@
 		#size-cells = <2>;
 		ranges;
 
-		framebuffer {
+		framebuffer: framebuffer@80b00000 {
 			compatible = "simple-framebuffer";
+			reg = <0x00 0x80b00000 0x00 (1024 * 600 * 2)>;
 			clocks = <&rcc CK_BUS_LTDC>, <&rcc CK_KER_LTDC>,
 				 <&rcc CK_BUS_LVDS>, <&rcc CK_KER_LVDSPHY>;
 			status = "disabled";
@@ -349,7 +350,6 @@
 };
 
 &ltdc {
-	default-on;
 	status = "okay";
 
 	port {
@@ -369,7 +369,6 @@
 };
 
 &lvds {
-	default-on;
 	vdd-supply =  <&scmi_vddcore>;
 	vdda18-supply = <&scmi_v1v8>;
 	status = "disabled";
