@@ -13,7 +13,10 @@ dtb-$(CONFIG_STM32MP21X) += \
 
 dtb-$(CONFIG_STM32MP23X) += \
 	stm32mp235f-dk-cm33tdcid-ostl-sdcard.dtb \
-	stm32mp235f-dk-cm33tdcid-ostl-serial-ca35tdcid.dtb
+	stm32mp235f-dk-cm33tdcid-ostl-serial-ca35tdcid.dtb \
+	stm32mp235c-phyflex-fpsc-g-som-m33td-emmc.dtb \
+	stm32mp235c-phyflex-fpsc-g-som-m33td-sdcard.dtb \
+	stm32mp235c-phyflex-fpsc-g-som-m33td-serial-a35td.dtb
 
 dtb-$(CONFIG_STM32MP25X) += \
 	stm32mp257f-dk-cm33tdcid-ostl-emmc.dtb \

@@ -10,8 +10,16 @@ flavorlist-MP21 += $(flavor_dts_file-215F_DK_CM33TDCID_OSTL_SERIAL_CA35TDCID)
 
 # MP23 boards
 flavor_dts_file-235F_DK_CM33TDCID_OSTL_SDCARD = stm32mp235f-dk-cm33tdcid-ostl-sdcard.dts
+flavor_dts_file-235C_PHYFLEX_EMMC = stm32mp235c-phyflex-fpsc-g-som-m33td-emmc.dts
+flavor_dts_file-235C_PHYFLEX_SDCARD = stm32mp235c-phyflex-fpsc-g-som-m33td-sdcard.dts
+flavor_dts_file-235C_PHYFLEX_SERIAL_CA35TDCID = stm32mp235c-phyflex-fpsc-g-som-m33td-serial-a35td.dts
 flavorlist-MP23 += $(flavor_dts_file-235F_DK_CM33TDCID_OSTL_SDCARD)
+flavorlist-MP23 += $(flavor_dts_file-235C_PHYFLEX_EMMC)
+flavorlist-MP23 += $(flavor_dts_file-235C_PHYFLEX_SDCARD)
+flavorlist-MP23 += $(flavor_dts_file-235C_PHYFLEX_SERIAL_CA35TDCID)
 flavorlist-M33-TDCID += $(flavor_dts_file-235F_DK_CM33TDCID_OSTL_SDCARD)
+flavorlist-M33-TDCID += $(flavor_dts_file-235C_PHYFLEX_EMMC)
+flavorlist-M33-TDCID += $(flavor_dts_file-235C_PHYFLEX_SDCARD)
 
 flavor_dts_file-235F_DK_CM33TDCID_OSTL_SERIAL_CA35TDCID = stm32mp235f-dk-cm33tdcid-ostl-serial-ca35tdcid.dts
 flavorlist-MP23 += $(flavor_dts_file-235F_DK_CM33TDCID_OSTL_SERIAL_CA35TDCID)

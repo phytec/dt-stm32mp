@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) 2026 PHYTEC Messtechnik GmbH
+ * Authors: Christophe Parant <c.parant@phytec.fr>
+ *          Nicolas Raimundo <n.raimundo@phytec.fr>
+ */
+
+&clk_hse {
+	clock-frequency = <40000000>;
+	status = "disabled";
+};
+
+&clk_hsi {
+	clock-frequency = <64000000>;
+	status = "disabled";
+};
+
+&clk_lse {
+	clock-frequency = <32768>;
+	status = "disabled";
+};
+
+&clk_lsi {
+	clock-frequency = <32000>;
+	status = "disabled";
+};
+
+&clk_msi {
+	clock-frequency = <16000000>;
+	status = "disabled";
+};

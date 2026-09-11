@@ -1,0 +1,8 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) PHYTEC GmbH 2025 - All Rights Reserved
+ * Author: Christophe PARANT <c.parant@phytec.fr>,
+ *         Nicolas Raimundo <n.raimundo@phytec.fr>.
+ */
+
+#include "stm32mp235c-phyflex-fpsc-g-som-u-boot.dtsi"
