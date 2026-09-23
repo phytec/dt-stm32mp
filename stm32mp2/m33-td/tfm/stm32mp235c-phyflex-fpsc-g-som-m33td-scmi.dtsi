@@ -399,16 +399,6 @@
 			clocks = <&rcc CK_BUS_GPIOI>;
 			scmi-id = <CK_SCMI_GPIOI>;
 		};
-		scmi_clk_gpioj:ck_bus_gpioj {
-			compatible = "st,stm32mp25-scmi-clk";
-			clocks = <&rcc CK_BUS_GPIOJ>;
-			scmi-id = <CK_SCMI_GPIOJ>;
-		};
-		scmi_clk_gpiok:ck_bus_gpiok {
-			compatible = "st,stm32mp25-scmi-clk";
-			clocks = <&rcc CK_BUS_GPIOK>;
-			scmi-id = <CK_SCMI_GPIOK>;
-		};
 		 scmi_clk_gpioz:ck_bus_gpioz {
 			compatible = "st,stm32mp25-scmi-clk";
 			clocks = <&rcc CK_BUS_GPIOZ>;

@@ -45,13 +45,6 @@
 			st,opp-default;
 			st,pll = <&pll1_cfg_1200Mhz>;
 		};
-
-		opp-1500000000 {
-			opp-hz = /bits/ 64 <1500000000>;
-			opp-microvolt = <910000>;
-			opp-supported-hw = <0x2>;
-			st,pll = <&pll1_cfg_1500MHz>;
-		};
 	};
 };
 

@@ -508,8 +508,7 @@
          <&scmi_clk_gpioc>, <&scmi_clk_gpiod>,
          <&scmi_clk_gpioe>, <&scmi_clk_gpiof>,
          <&scmi_clk_gpiog>, <&scmi_clk_gpioh>,
-         <&scmi_clk_gpioi>, <&scmi_clk_gpioj>,
-         <&scmi_clk_gpiok>, <&scmi_clk_gpioz>,
+         <&scmi_clk_gpioi>, <&scmi_clk_gpioz>,
 
          <&scmi_clk_icn_ls_mcu>, <&scmi_clk_hse>,
          <&scmi_clk_lse>, <&scmi_clk_hsi>, <&scmi_clk_lsi>,
