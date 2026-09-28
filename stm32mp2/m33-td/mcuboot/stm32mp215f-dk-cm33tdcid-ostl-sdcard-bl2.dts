@@ -32,6 +32,7 @@
 	chosen {
 		stdout-device = &uart4;
 		tfm,entropy = &rng1;
+		tfm,watchdog = &iwdg3;
 	};
 
 	memory@80000000 {
@@ -46,10 +47,10 @@
 			      <&id_otp>,
 			      <&package_otp>,
 			      <&hconf1_otp>,
-			      <&bl2_rotpk_0>,
-			      <&bl2_rotpk_0>, /*keep the same key for slot1 */
+			      <&tfm_fw_pkh>,
+			      <&ddr_fw_pkh>,
+			      <&ca35_fw_pkh>,
 			      <&board_id>,
-			      <&entropy_seed>,
 			      <&iak>;
 		nvmem-cell-names = "implementation_id",
 				   "rpn_otp",
@@ -57,13 +58,26 @@
 				   "id_otp",
 				   "package_otp",
 				   "hconf1_otp",
-				   "bl2_rotpk_0",
-				   "bl2_rotpk_1",
+				   "tfm_fw_pkh",
+				   "ddr_fw_pkh",
+				   "ca35_fw_pkh",
 				   "board_id",
-				   "entropy_seed",
 				   "iak";
 	};
 
+};
+
+&nvram {
+	status = "okay";
+
+	nvmem-layout {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		cm_fwu_info: tamp-bkp@124 {
+			#nvmem-cell-cells = <0>;
+			reg = <0x124 0x4>;
+		};
+	};
 };
 
 &uart4 {
@@ -91,10 +105,11 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 
-	pmic2: pmic@33 {
-//		compatible = "st,stpmic2l";
-		compatible = "st,stpmic2";
+	stpmic2l: pmic@33 {
+		compatible = "st,stpmic2l";
 		reg = <0x33>;
+		interrupt-controller;
+		#interrupt-cells = <1>;
 		status = "okay";
 
 		regulators {
@@ -135,7 +150,6 @@
 				regulator-name = "vdd1_ddr";
 				regulator-min-microvolt = <1800000>;
 				regulator-max-microvolt = <1800000>;
-				regulator-enable-ramp-delay = <1000>;
 			};
 			vdd3v3_usb: ldo4 {
 				regulator-name = "vdd3v3_usb";
@@ -183,36 +197,48 @@
 &pwr {
 	status = "okay";
 
-	vdda18adc {
+	pwr_rif: access-controller {
 		status = "okay";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		vin-supply = <&vdda_1v8>;
 	};
 
-	vddio1 {
+	regulators {
 		status = "okay";
-		vin-supply = <&vddio_pmic>;
-	};
 
-	vddio2 {
-		status = "okay";
-		vin-supply = <&vdda_1v8>;
-	};
+		vdda18adc {
+			status = "okay";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			vin-supply = <&vdda_1v8>;
+		};
 
-	vddio3 {
-		status = "okay";
-		vin-supply = <&vddio_pmic>;
-	};
+		vddio1 {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+		};
 
-	vddio {
-		status = "okay";
-		vin-supply = <&vddio_pmic>;
+		vddio2 {
+			status = "okay";
+			vin-supply = <&vdda_1v8>;
+		};
+
+		vddio3 {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+		};
+
+		vddio {
+			status = "okay";
+			vin-supply = <&vddio_pmic>;
+		};
 	};
 };
 
 &hconf1_otp {
 	shadow-provisionning = <0x00018000>;
+};
+
+&ramcfg {
+	status = "okay";
 };
 
 &rifsc {
@@ -245,4 +271,9 @@
 
 &tamp {
 	status = "okay";
+};
+
+&iwdg3 {
+	status = "okay";
+	timeout-sec = <120>;
 };
