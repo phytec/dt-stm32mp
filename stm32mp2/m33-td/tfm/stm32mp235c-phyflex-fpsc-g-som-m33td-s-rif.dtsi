@@ -872,16 +872,20 @@
 	st,protreg = <RISAFPROT(RISAF_REG_ID(11), RIF_CID1_BF|RIF_CID4_BF, RIF_CID1_BF|RIF_CID4_BF, RIF_UNUSED, RIF_NSEC, RIF_ENC_DIS, RIF_BREN_EN)>;
 };
 
-&ltdc_sec_rotation {
+&ltdc_sec_layer {
 	st,protreg = <RISAFPROT(RISAF_REG_ID(12), RIF_CID1_BF|RIF_CID4_BF, RIF_CID1_BF|RIF_CID4_BF, RIF_UNUSED, RIF_NSEC, RIF_ENC_DIS, RIF_BREN_EN)>;
 };
 
+&ltdc_sec_rotation {
+	st,protreg = <RISAFPROT(RISAF_REG_ID(13), RIF_CID1_BF|RIF_CID4_BF, RIF_CID1_BF|RIF_CID4_BF, RIF_UNUSED, RIF_NSEC, RIF_ENC_DIS, RIF_BREN_EN)>;
+};
+
 &linuxkernel2 {
-	st,protreg = <RISAFPROT(RISAF_REG_ID(13), RIF_CID1_BF, RIF_CID1_BF, RIF_UNUSED, RIF_NSEC, RIF_ENC_DIS, RIF_BREN_EN)>;
+	st,protreg = <RISAFPROT(RISAF_REG_ID(14), RIF_CID1_BF, RIF_CID1_BF, RIF_UNUSED, RIF_NSEC, RIF_ENC_DIS, RIF_BREN_EN)>;
 };
 
 &risaf4 {
-	memory-region = <&tfm_code>, <&cm33_cube_fw>, <&tfm_data>, <&cm33_cube_data>, <&ipc_shmem>, <&ltdc_m33_layer>, <&fwu_shmem>, <&bl31_context>, <&op_tee>, <&linuxkernel1>, <&gpu_reserved>, <&ltdc_sec_rotation>, <&linuxkernel2>;
+	memory-region = <&tfm_code>, <&cm33_cube_fw>, <&tfm_data>, <&cm33_cube_data>, <&ipc_shmem>, <&ltdc_m33_layer>, <&fwu_shmem>, <&bl31_context>, <&op_tee>, <&gpu_reserved>, <&ltdc_sec_layer>, <&ltdc_sec_rotation>, <&linuxkernel1>, <&linuxkernel2>;
 };
 
 &scmi_pd_gpu {

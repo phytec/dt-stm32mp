@@ -124,18 +124,28 @@
 			no-map;
 		};
 
-		linuxkernel1: linuxkernel1@84000000 {
-			reg = <0x0 0x84000000 0x0 0x77000000>;
+		gpu_reserved: gpu-reserved@84000000 {
+			reg = <0x0 0x84000000 0x0 0x4000000>;
 			no-map;
 		};
 
-		gpu_reserved: gpu-reserved@fb000000 {
-			reg = <0x0 0xfb000000 0x0 0x4000000>;
+		ltdc_sec_layer: ltdc-sec-layer@88000000 {
+			reg = <0x0 0x88000000 0x0 0x800000>;
 			no-map;
 		};
 
-		ltdc_sec_rotation: ltdc-sec-rotation@ff000000 {
-			reg = <0x0 0xff000000 0x0 0x1000000>;
+		ltdc_sec_rotation: ltdc-sec-rotation@88800000 {
+			reg = <0x0 0x88800000 0x0 0x1000000>;
+			no-map;
+		};
+
+		linuxkernel1: linuxkernel1@89800000 {
+			reg = <0x0 0x89800000 0x0 0x76800000>;
+			no-map;
+		};
+
+		linuxkernel2: linuxkernel2@100000000 {
+			reg = <0x1 0x00000000 0x0 0x80000000>;
 			no-map;
 		};
 	};

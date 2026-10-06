@@ -146,21 +146,27 @@
 			#memory-region-cells = <0>;
 		};
 
-		linuxkernel1: linuxkernel1@84000000 {
+		gpu_reserved: gpu-reserved@84000000 {
 			compatible = "reserved-memory";
-			reg = <0x0 0x84000000 0x0 0x77000000>;
+			reg = <0x0 0x84000000 0x0 0x4000000>;
 			#memory-region-cells = <0>;
 		};
 
-		gpu_reserved: gpu-reserved@fb000000 {
+		ltdc_sec_layer: ltdc-sec-layer@88000000 {
 			compatible = "reserved-memory";
-			reg = <0x0 0xfb000000 0x0 0x4000000>;
+			reg = <0x0 0x88000000 0x0 0x800000>;
 			#memory-region-cells = <0>;
 		};
 
-		ltdc_sec_rotation: ltdc-sec-rotation@ff000000 {
+		ltdc_sec_rotation: ltdc-sec-rotation@88800000 {
 			compatible = "reserved-memory";
-			reg = <0x0 0xff000000 0x0 0x1000000>;
+			reg = <0x0 0x88800000 0x0 0x1000000>;
+			#memory-region-cells = <0>;
+		};
+
+		linuxkernel1: linuxkernel1@89800000 {
+			compatible = "reserved-memory";
+			reg = <0x0 0x89800000 0x0 0x76800000>;
 			#memory-region-cells = <0>;
 		};
 
