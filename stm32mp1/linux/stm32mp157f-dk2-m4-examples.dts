@@ -1,0 +1,134 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2026 - All Rights Reserved
+ * Author: Amelie Delaunay <amelie.delaunay@foss.st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157f-dk2.dts"
+#include "stm32mp15-m4-srm.dtsi"
+#include "stm32mp15-m4-srm-pinctrl.dtsi"
+
+/ {
+	model = "STMicroelectronics STM32MP157F-DK2 configured to run M4 examples";
+	compatible = "st,stm32mp157f-dk2-m4-examples", "st,stm32mp157f-dk2", "st,stm32mp157";
+};
+
+&adc {
+	status = "disabled";
+};
+
+&dac {
+	status = "disabled";
+};
+
+&dma2 {
+	status = "disabled";
+};
+
+&dmamux1 {
+	dma-masters = <&dma1>;
+	dma-channels = <8>;
+};
+
+&m4_adc {
+	vref-supply = <&vrefbuf>;
+	status = "okay";
+};
+
+&m4_crc2 {
+	status = "okay";
+};
+
+&m4_cryp2 {
+	status = "okay";
+};
+
+&m4_dac {
+	vref-supply = <&vrefbuf>;
+	status = "okay";
+};
+
+&m4_dma2 {
+	status = "okay";
+};
+
+&m4_hash2 {
+	status = "okay";
+};
+
+&m4_i2c5 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&m4_i2c5_pins_a>;
+	status = "okay";
+};
+
+&m4_rng2 {
+	status = "okay";
+};
+
+
+&m4_rproc {
+	/delete-property/pinctrl-0;
+	/delete-property/pinctrl-names;
+};
+
+&m4_system_resources {
+	status = "okay";
+
+	button {
+		compatible = "rproc-srm-dev";
+		interrupt-parent = <&gpioa>;
+		interrupts = <14 2>;
+		interrupt-names = "irq";
+		status = "okay";
+	};
+
+	m4_led: m4-led {
+		compatible = "rproc-srm-dev";
+		pinctrl-names = "default";
+		pinctrl-0 = <&m4_leds_orange_pins_a>;
+		status = "okay";
+	};
+};
+
+&m4_spi4 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&m4_spi4_pins_a>;
+	status = "okay";
+};
+
+&m4_timers1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&m4_pwm1_ch1_pins_a>;
+	status = "okay";
+};
+
+&m4_timers2 {
+	status = "okay";
+};
+
+&m4_uart7 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&m4_uart7_pins_a>;
+	status = "okay";
+};
+
+&pinctrl {
+	m4_leds_orange_pins_a: m4-leds-orange-0 {
+		pins {
+			pinmux = <STM32_PINMUX('H', 7, RSVD)>;
+		};
+	};
+
+	m4_pwm1_ch1_pins_a: m4-pwm1-0-ch-1 {
+		pins {
+			pinmux = <STM32_PINMUX('E', 9, RSVD)>;
+		};
+	};
+};
+
+&timers1 {
+	status = "disabled";
+};

@@ -1,0 +1,171 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2025 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ * Author: Pascal Paillet <p.paillet@st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157f-ev1.dts"
+
+/ {
+	model = "STMicroelectronics STM32MP157F eval OSI daughter on eval mother";
+	compatible = "st,stm32mp157f-ev1-osi", "st,stm32mp157f-ev1", "st,stm32mp157f-ed1", "st,stm32mp157";
+};
+
+&adc {
+	status = "disabled";
+};
+
+&cec {
+	status = "disabled";
+};
+
+&cs_cti_cpu0 {
+	status = "disabled";
+};
+
+&cs_cti_cpu1 {
+	status = "disabled";
+};
+
+&cs_cti_trace {
+	status = "disabled";
+};
+
+&cs_etf {
+	status = "disabled";
+};
+
+&cs_etm0 {
+	status = "disabled";
+};
+
+&cs_etm1 {
+	status = "disabled";
+};
+
+&cs_funnel {
+	status = "disabled";
+};
+
+&cs_stm {
+	status = "disabled";
+};
+
+&cs_tpiu {
+	status = "disabled";
+};
+
+&dbg_bus {
+	status = "disabled";
+};
+
+&dcmi {
+	status = "disabled";
+};
+
+&ddrperfm {
+	status = "disabled";
+};
+
+&dfsdm {
+	status = "disabled";
+};
+
+&dmic0 {
+	status = "disabled";
+};
+
+&dmic1 {
+	status = "disabled";
+};
+
+&dmic2 {
+	status = "disabled";
+};
+
+&dmic3 {
+	status = "disabled";
+};
+
+&dsi {
+	status = "disabled";
+};
+
+&dts {
+	status = "disabled";
+};
+
+&ethernet0 {
+	status = "disabled";
+};
+
+&fmc {
+	status = "disabled";
+};
+
+&ipcc {
+	status = "disabled";
+};
+
+&m_can1 {
+	status = "disabled";
+};
+
+&m4_rproc {
+	status = "disabled";
+};
+
+&panel_backlight {
+	status = "disabled";
+};
+
+&qspi {
+	status = "disabled";
+};
+
+&sound {
+	status = "disabled";
+};
+
+&spdif_in {
+	status = "disabled";
+};
+
+&spdif_out {
+	status = "disabled";
+};
+
+&spdifrx {
+	status = "disabled";
+};
+
+&timers2 {
+	status = "disabled";
+};
+
+&timers6 {
+	status = "disabled";
+};
+
+&timers8 {
+	status = "disabled";
+};
+
+&timers12 {
+	status = "disabled";
+};
+
+&usbh_ehci {
+	status = "disabled";
+};
+
+&usbotg_hs {
+	status = "disabled";
+};
+
+&usbphyc {
+	status = "disabled";
+};

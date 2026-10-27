@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2025 - All Rights Reserved
+ */
+
+#include "stm32mp23-u-boot.dtsi"
+
+/* Remove USB Type-C related nodes */
+/delete-node/ &i2c1;
+/delete-node/ &ucpd;
+
+/ {
+	config {
+		u-boot,boot-led = "led-blue";
+		u-boot,mmc-env-partition = "u-boot-env";
+	};
+
+	fwu-mdata {
+		compatible = "u-boot,fwu-mdata-gpt";
+		fwu-mdata-store = <&sdmmc1>;
+	};
+};
+
+&dwc3 {
+	dr_mode = "peripheral";
+	/delete-node/ port;
+};
+
+
+&sdmmc3 {
+	status = "disabled";
+};
+
+&usart2 {
+	bootph-all;
+};
+
+&usart2_pins_a {
+	bootph-all;
+	pins1 {
+		bootph-all;
+	};
+	pins2 {
+		bootph-all;
+	};
+};

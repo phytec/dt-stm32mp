@@ -1,0 +1,107 @@
+# SPDX-License-Identifier: GPL-2.0
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/arm/stm32/stm32mp1-extdts.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: STMicroelectronics STM32MP1 based Platforms
+
+maintainers:
+  - Amelie Delaunay <amelie.delaunay@foss.st.com>
+
+properties:
+  $nodename:
+    const: "/"
+  compatible:
+    oneOf:
+      - $ref: stm32.yaml#/properties/compatible
+
+      - description: ST STM32MP135F-DK based Boards
+        oneOf:
+          - items:
+              - enum:
+                  - st,stm32mp135f-dk-a7-examples
+              - pattern: "^st,stm32mp135f-dk$"
+              - pattern: "^st,stm32mp135$"
+          - items:
+              - const: st,stm32mp135f-dk-osi
+              - pattern: "^st,stm32mp135f-dk$"
+              - pattern: "^st,stm32mp135$"
+          - items:
+              - const: st,stm32mp135f-dk-pmic1ld
+              - pattern: "^st,stm32mp135$"
+
+      - description: ST STM32MP157A-DK1 based Boards
+        items:
+          - enum:
+              - st,stm32mp157a-dk1-a7-examples
+              - st,stm32mp157a-dk1-m4-examples
+          - pattern: "^st,stm32mp157a-dk1$"
+          - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157C-DK2 based Boards
+        items:
+          - enum:
+              - st,stm32mp157c-dk2-a7-examples
+              - st,stm32mp157c-dk2-m4-examples
+              - st,stm32mp157c-dk2-rcc-scmi
+          - pattern: "^st,stm32mp157c-dk2$"
+          - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157C-EV1 based Boards
+        items:
+          - enum:
+              - st,stm32mp157c-ev1-a7-examples
+              - st,stm32mp157c-ev1-m4-examples
+          - pattern: "^st,stm32mp157c-ev1$"
+          - pattern: "^st,stm32mp157c-ed1$"
+          - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157D-DK1 based Boards
+        items:
+          - enum:
+              - st,stm32mp157d-dk1-a7-examples
+              - st,stm32mp157d-dk1-m4-examples
+          - pattern: "^st,stm32mp157d-dk1$"
+          - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157D-EV1 based Boards
+        items:
+          - enum:
+              - st,stm32mp157d-ev1-a7-examples
+              - st,stm32mp157d-ev1-m4-examples
+          - pattern: "^st,stm32mp157d-ev1$"
+          - pattern: "^st,stm32mp157d-ed1$"
+          - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157F-DK2 based Boards
+        oneOf:
+          - items:
+            - enum:
+              - st,stm32mp157f-dk2-a7-examples
+              - st,stm32mp157f-dk2-m4-examples
+            - pattern: "^st,stm32mp157f-dk2$"
+            - pattern: "^st,stm32mp157$"
+          - items:
+            - const: st,stm32mp157f-dk2-osi
+            - pattern: "^st,stm32mp157f-dk2$"
+            - pattern: "^st,stm32mp157$"
+
+      - description: ST STM32MP157F-EV1 based Boards
+        oneOf:
+          - items:
+            - enum:
+              - st,stm32mp157f-ev1-a7-examples
+              - st,stm32mp157f-ev1-m4-examples
+            - pattern: "^st,stm32mp157f-ev1$"
+            - pattern: "^st,stm32mp157f-ed1$"
+            - pattern: "^st,stm32mp157$"
+          - items:
+            - const: st,stm32mp157f-ev1-osi
+            - pattern: "^st,stm32mp157f-ev1$"
+            - pattern: "^st,stm32mp157f-ed1$"
+            - pattern: "^st,stm32mp157$"
+
+additionalProperties: true
+
+...

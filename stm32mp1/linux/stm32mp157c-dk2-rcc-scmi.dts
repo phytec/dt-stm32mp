@@ -1,0 +1,402 @@
+// SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2026 - All Rights Reserved
+ */
+
+/dts-v1/;
+
+#include "stm32mp157c-dk2-no-scmi.dts"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "STMicroelectronics STM32MP157C-DK2 RCC SCMI Discovery Board";
+	compatible = "st,stm32mp157c-dk2-rcc-scmi", "st,stm32mp157c-dk2", "st,stm32mp157";
+
+	arm_wdt: watchdog {
+		compatible = "arm,smc-wdt";
+		arm,smc-id = <0xbc000000>;
+		status = "disabled";
+	};
+
+	reserved-memory {
+		optee@de000000 {
+			reg = <0xde000000 0x2000000>;
+			no-map;
+		};
+	};
+
+	firmware {
+		optee: optee {
+			compatible = "linaro,optee-tz";
+			method = "smc";
+			interrupt-parent = <&intc>;
+			interrupts = <GIC_PPI 15 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
+			bootph-some-ram;
+		};
+
+		scmi: scmi {
+			compatible = "linaro,scmi-optee";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			linaro,optee-channel-id = <0>;
+			bootph-some-ram;
+
+			scmi_clk: protocol@14 {
+				reg = <0x14>;
+				#clock-cells = <1>;
+			};
+
+			scmi_reset: protocol@16 {
+				reg = <0x16>;
+				#reset-cells = <1>;
+			};
+		};
+	};
+
+	pm_domain {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "st,stm32mp157c-pd";
+
+		pd_core_ret: core-ret-power-domain@1 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <1>;
+			#power-domain-cells = <0>;
+			label = "CORE-RETENTION";
+
+			pd_core: core-power-domain@2 {
+				reg = <2>;
+				#power-domain-cells = <0>;
+				label = "CORE";
+			};
+		};
+	};
+
+	soc {
+		pwr_irq: pwr@50001020 {
+			compatible = "st,stm32mp1-pwr";
+			reg = <0x50001020 0x100>;
+			interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-controller;
+			#interrupt-cells = <3>;
+
+			st,wakeup-pins = <&gpioa 0 GPIO_ACTIVE_HIGH>,
+					 <&gpioa 2 GPIO_ACTIVE_HIGH>,
+					 <&gpioc 13 GPIO_ACTIVE_HIGH>,
+					 <&gpioi 8 GPIO_ACTIVE_HIGH>,
+					 <&gpioi 11 GPIO_ACTIVE_HIGH>,
+					 <&gpioc 1 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
+/delete-node/ &clk_hse;
+/delete-node/ &clk_hsi;
+/delete-node/ &clk_lse;
+/delete-node/ &clk_lsi;
+/delete-node/ &clk_csi;
+
+&arm_wdt {
+	bootph-all;
+	timeout-sec = <32>;
+	status = "okay";
+};
+
+&cpu0 {
+	clocks = <&scmi_clk CK_SCMI_MPU>;
+};
+
+&cpu1 {
+	clocks = <&scmi_clk CK_SCMI_MPU>;
+};
+
+&cryp1 {
+	clocks = <&scmi_clk CK_SCMI_CRYP1>;
+	resets = <&scmi_reset RST_SCMI_CRYP1>;
+	post-init-providers = <&scmi_clk>, <&scmi_reset>;
+};
+
+&dsi {
+	clocks = <&rcc DSI>, <&scmi_clk CK_SCMI_HSE>, <&rcc DSI_PX>;
+};
+
+&ethernet0 {
+	power-domains = <&pd_core>;
+};
+
+&exti {
+	wakeup-parent = <&pwr_irq>;
+
+	/* Add pwr_irq from EXTI_55 to EXTI_60 */
+	interrupts-extended =
+		<&intc GIC_SPI 6   IRQ_TYPE_LEVEL_HIGH>,	/* EXTI_0 */
+		<&intc GIC_SPI 7   IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 8   IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 9   IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 10  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 23  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 64  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 65  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 66  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 67  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 40  IRQ_TYPE_LEVEL_HIGH>,	/* EXTI_10 */
+		<&intc GIC_SPI 42  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 76  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 77  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 127 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 1   IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<0>,
+		<&intc GIC_SPI 3   IRQ_TYPE_LEVEL_HIGH>,
+		<0>,						/* EXTI_20 */
+		<&intc GIC_SPI 31  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 33  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 72  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 95  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 37  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 38  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 39  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 71  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 52  IRQ_TYPE_LEVEL_HIGH>,	/* EXTI_30 */
+		<&intc GIC_SPI 53  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 82  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 83  IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<0>,
+		<0>,
+		<0>,
+		<0>,
+		<0>,
+		<0>,						/* EXTI_40 */
+		<0>,
+		<0>,
+		<&intc GIC_SPI 75  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 98  IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<&intc GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 93  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<&intc GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,	/* EXTI_50 */
+		<0>,
+		<&intc GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+		<&pwr_irq 0 IRQ_TYPE_EDGE_FALLING 0>,
+		<&pwr_irq 1 IRQ_TYPE_EDGE_FALLING 0>,
+		<&pwr_irq 2 IRQ_TYPE_EDGE_FALLING 0>,
+		<&pwr_irq 3 IRQ_TYPE_EDGE_FALLING 0>,
+		<&pwr_irq 4 IRQ_TYPE_EDGE_FALLING 0>,
+		<&pwr_irq 5 IRQ_TYPE_EDGE_FALLING 0>,		/* EXTI_60 */
+		<&intc GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<0>,
+		<0>,
+		<&intc GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
+		<0>,
+		<0>,
+		<&intc GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 94  IRQ_TYPE_LEVEL_HIGH>,
+		<&intc GIC_SPI 62  IRQ_TYPE_LEVEL_HIGH>,	/* EXTI_70 */
+		<0>,
+		<0>,
+		<&intc GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
+};
+
+&gpioa {
+	clocks = <&scmi_clk CK_SCMI_GPIOA>;
+};
+
+&gpiob {
+	clocks = <&scmi_clk CK_SCMI_GPIOB>;
+};
+
+&gpioc {
+	clocks = <&scmi_clk CK_SCMI_GPIOC>;
+};
+
+&gpiod {
+	clocks = <&scmi_clk CK_SCMI_GPIOD>;
+};
+
+&gpioe {
+	clocks = <&scmi_clk CK_SCMI_GPIOE>;
+};
+
+&gpiof {
+	clocks = <&scmi_clk CK_SCMI_GPIOF>;
+};
+
+&gpiog {
+	clocks = <&scmi_clk CK_SCMI_GPIOG>;
+};
+
+&gpioh {
+	clocks = <&scmi_clk CK_SCMI_GPIOH>;
+};
+
+&gpioi {
+	clocks = <&scmi_clk CK_SCMI_GPIOI>;
+};
+
+&gpioj {
+	clocks = <&scmi_clk CK_SCMI_GPIOJ>;
+};
+
+&gpiok {
+	clocks = <&scmi_clk CK_SCMI_GPIOK>;
+};
+
+&gpioz {
+	clocks = <&scmi_clk CK_SCMI_GPIOZ>;
+};
+
+&hash1 {
+	clocks = <&scmi_clk CK_SCMI_HASH1>;
+	resets = <&scmi_reset RST_SCMI_HASH1>;
+	post-init-providers = <&scmi_clk>, <&scmi_reset>;
+};
+
+&ipcc {
+	power-domains = <&pd_core>;
+};
+
+&i2c1 {
+	power-domains = <&pd_core>;
+};
+
+&i2c2 {
+	power-domains = <&pd_core>;
+};
+
+&i2c3 {
+	power-domains = <&pd_core>;
+};
+
+&i2c4 {
+	clocks = <&scmi_clk CK_SCMI_I2C4>;
+	resets = <&scmi_reset RST_SCMI_I2C4>;
+	power-domains = <&pd_core>;
+
+	pmic@33 {
+		interrupts-extended = <&exti 55 IRQ_TYPE_EDGE_FALLING>;
+	};
+};
+
+&i2c5 {
+	power-domains = <&pd_core>;
+};
+
+&i2c6 {
+	clocks = <&scmi_clk CK_SCMI_I2C6>;
+	resets = <&scmi_reset RST_SCMI_I2C6>;
+	power-domains = <&pd_core>;
+};
+
+&iwdg1 {
+	/* IWDG1 is secure and managed through arm_wdt */
+	status = "disabled";
+};
+
+&iwdg2 {
+	clocks = <&rcc IWDG2>, <&scmi_clk CK_SCMI_LSI>;
+};
+
+&lptimer1 {
+	power-domains = <&pd_core>;
+};
+
+&lptimer2 {
+	power-domains = <&pd_core>;
+};
+
+&lptimer3 {
+	power-domains = <&pd_core>;
+};
+
+&lptimer4 {
+	power-domains = <&pd_core>;
+};
+
+&lptimer5 {
+	power-domains = <&pd_core>;
+};
+
+&lptimer2 {
+	power-domains = <&pd_core>;
+};
+
+&m4_rproc {
+	/delete-property/ st,syscfg-holdboot;
+	resets = <&scmi_reset RST_SCMI_MCU>,
+		 <&scmi_reset RST_SCMI_MCU_HOLD_BOOT>;
+	reset-names = "mcu_rst", "hold_boot";
+};
+
+&mdma1 {
+	resets = <&scmi_reset RST_SCMI_MDMA>;
+};
+
+&rcc {
+	compatible = "st,stm32mp1-rcc-secure", "syscon";
+	clock-names = "hse", "hsi", "csi", "lse", "lsi";
+	clocks = <&scmi_clk CK_SCMI_HSE>,
+		 <&scmi_clk CK_SCMI_HSI>,
+		 <&scmi_clk CK_SCMI_CSI>,
+		 <&scmi_clk CK_SCMI_LSE>,
+		 <&scmi_clk CK_SCMI_LSI>;
+};
+
+&rng1 {
+	clocks = <&scmi_clk CK_SCMI_RNG1>;
+	resets = <&scmi_reset RST_SCMI_RNG1>;
+	post-init-providers = <&scmi_clk>, <&scmi_reset>;
+};
+
+&rtc {
+	clocks = <&scmi_clk CK_SCMI_RTCAPB>, <&scmi_clk CK_SCMI_RTC>;
+};
+
+&uart4 {
+	power-domains = <&pd_core>;
+};
+
+&uart5 {
+	power-domains = <&pd_core>;
+};
+
+&uart7 {
+	power-domains = <&pd_core>;
+};
+
+&uart8 {
+	power-domains = <&pd_core>;
+};
+
+&usart1 {
+	clocks = <&scmi_clk CK_SCMI_USART1>;
+	power-domains = <&pd_core>;
+};
+
+&usart2 {
+	power-domains = <&pd_core>;
+};
+
+&usart3 {
+	power-domains = <&pd_core>;
+};
+
+&usart6 {
+	power-domains = <&pd_core>;
+};
+
+&usbh_ehci {
+	power-domains = <&pd_core>;
+};
+
+&usbotg_hs {
+	power-domains = <&pd_core>;
+};
